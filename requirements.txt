@@ -11,3 +11,5 @@ Mako
 MarkupSafe
 SQLAlchemy
 Werkzeug
+setuptools<58
+Flask-MongoEngine

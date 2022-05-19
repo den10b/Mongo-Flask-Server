@@ -1,6 +1,6 @@
 import flask
 
-from app import app, db
+from app import app
 from .models import Message
 
 
@@ -8,15 +8,16 @@ from .models import Message
 def sendMessage():
     username = flask.request.values.get('user')  # Your form's
     message = flask.request.values.get('message')  # input names
-    db.session.add(Message(name=username, message=message))
-    db.session.commit()
+    # db.session.add(Message(name=username, message=message))
+    # db.session.commit()
+    Message(name=username,message=message).save()
     return "200"
 
 
 @app.route('/get', methods=['GET'])
 def getChat():
-    msg = []
-    for obj in db.session.query(Message).order_by(Message.id):
-        msg.append(obj.name+": "+obj.message)
-    return str(msg)
+    msg = ""
+    for obj in Message.objects():
+        msg+=str(obj.name+": "+obj.message+'\n')
+    return msg
 
